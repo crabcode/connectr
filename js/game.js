@@ -1,6 +1,7 @@
 var Game = function Game()
 {
     this.name = "Name";
+    this.day = 0;
     
     this.interests = {
         animals: 1,
@@ -30,7 +31,7 @@ Game.prototype =
         $("body").append($(document.createElement("div")).attr("id", "connectr-header")
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
                             .append($(document.createElement("div")).attr("id", "connectr-logo").text("Connectr"))
-                            .append($(document.createElement("div")).attr("id", "connectr-profile").addClass("alert").click(this.showProfile.bind(this)))
+                            .append($(document.createElement("div")).attr("id", "connectr-profile").click(this.showProfile.bind(this)))
                             .append($(document.createElement("div")).attr("id", "connectr-feed").addClass("alert").click(this.showNewsfeed.bind(this)))));
         $("body").append(this.container);
         
@@ -76,7 +77,7 @@ Game.prototype =
     
     respond: function respond(e)
     {
-        var item = $(e.currentTarget.parentElement.parentElement);
+        var item = $(e.currentTarget.parentElement.parentElement.parentElement);
         
         if ($(e.currentTarget).hasClass("news-response-like"))
         {
@@ -106,7 +107,11 @@ Game.prototype =
             item.remove();
         
         if ($("#news-container").children().length == 0)
+        {
+            $("#connectr-feed").removeClass("alert");
             this.showProfile();
+            setInterval(function() { this.loadNextDay(); }.bind(this), 2000);
+        }
     },
     
     showNewsfeed: function showNewsfeed()
@@ -119,5 +124,12 @@ Game.prototype =
     {
         this.newsfeed.hide();
         this.profile.show();
+    },
+    
+    loadNextDay: function loadNextDay()
+    {
+        this.day++;
+        
+        $("#connectr-feed").addClass("alert");
     }
 };

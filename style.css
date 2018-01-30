@@ -43,6 +43,27 @@ html, body {
     height: 32px;
 }
 
+#connectr-profile.alert::after {
+    background: url('assets/alert.png');
+    background-size: contain;
+    position: absolute;
+    left: 24px;
+    content: '';
+    width: 16px;
+    height: 16px;
+}
+
+#connectr-feed.alert::after {
+    background: url('assets/alert.png');
+    background-size: contain;
+    position: absolute;
+    left: 24px;
+    top: -2px;
+    content: '';
+    width: 16px;
+    height: 16px;
+}
+
 #container, #connectr-header-container {
     width: 500px;
     margin: auto;
@@ -61,7 +82,7 @@ html, body {
 #profile-pic {
     border: 1px solid #7f3;
     background: url('assets/profile.jpg');
-    background-size: contain;
+    background-size: cover;
     width: 150px;
     height: 150px;
     margin: 10px auto;
