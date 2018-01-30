@@ -8,62 +8,26 @@ Logic.prototype =
     getNewsItems: function getNewsItems()
     {
         var content = [];
+        var todaysContent = this.game.content[this.game.day];
+        var interest, maxContent;
         
-        if(this.game.interests.animals > 0)
-        {
-            switch(this.game.agendas.cats)
-            {
-                case 0:
-                    content.push(this.game.content[0][0][0]);
-                    break;
-                case 1:
-                    content.push(this.game.content[0][1][0]);
-                    break;
-                case 2:
-                    content.push(this.game.content[0][2][0]);
-                    break;
-            }
-            switch(this.game.agendas.dogs)
-            {
-                case 0:
-                    content.push(this.game.content[0][0][1]);
-                    break;
-                case 1:
-                    content.push(this.game.content[0][1][1]);
-                    break;
-                case 2:
-                    content.push(this.game.content[0][2][1]);
-                    break;
-            }
-        }
+        //Animals
+        interest = this.game.interests.animals;
+        maxContent = todaysContent[0].length;
+        for(var i = 0; i <= interest && i < maxContent; i++)
+            content.push(todaysContent[0][i]);
         
-        if(this.game.interests.sports > 0)
-        {
-            switch(this.game.agendas.ballers)
-            {
-                case 0:
-                    content.push(this.game.content[1][0][0]);
-                    break;
-                case 1:
-                    content.push(this.game.content[1][1][0]);
-                    break;
-                case 2:
-                    content.push(this.game.content[1][2][0]);
-                    break;
-            }
-            switch(this.game.agendas.kickers)
-            {
-                case 0:
-                    content.push(this.game.content[1][0][1]);
-                    break;
-                case 1:
-                    content.push(this.game.content[1][1][1]);
-                    break;
-                case 2:
-                    content.push(this.game.content[1][2][1]);
-                    break;
-            }
-        }
+        //Sports
+        interest = this.game.interests.sports;
+        maxContent = todaysContent[1].length;
+        for(var i = 0; i <= interest && i < maxContent; i++)
+            content.push(todaysContent[1][i]);
+        
+        //Politics
+        interest = this.game.interests.politics;
+        maxContent = todaysContent[2].length;
+        for(var i = 0; i <= interest && i < maxContent; i++)
+            content.push(todaysContent[2][i]);
             
         return content;
     }
