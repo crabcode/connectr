@@ -9,13 +9,19 @@ var Game = function Game()
         politics: 1
     }
     
+    this.content = new createContent(this).content;
+    this.logic = new Logic(this);
+    
     this.init();
+    this.loadNextDay();
 }
 
 Game.prototype =
 {
     init: function init()
     {
+        this.sndPop = new Audio("assets/pop.wav");
+        
         this.container = $(document.createElement("div")).attr("id", "container");
         this.profile = $(document.createElement("div")).attr("id", "profile");
         this.newsfeed = $(document.createElement("div")).attr("id", "newsfeed");
@@ -32,12 +38,8 @@ Game.prototype =
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
                             .append($(document.createElement("div")).attr("id", "connectr-logo").text("Connectr"))
                             .append($(document.createElement("div")).attr("id", "connectr-profile").click(this.showProfile.bind(this)))
-                            .append($(document.createElement("div")).attr("id", "connectr-feed").addClass("alert").click(this.showNewsfeed.bind(this)))));
+                            .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))));
         $("body").append(this.container);
-        
-        this.createNewsItem("Ausländer sind doof!", "Behaupten wir jetzt einfach mal, weil die dauernd, also wirklich andauernd, so, naja, weißt schon, halt so manchmal, äh, also, ich mein, man kennt das ja...", ["politics"], 1);
-        
-        this.createNewsItem("Nee, du bist doof!", "Das ist ja jetzt auch nicht ganz richtig, find ich.", ["politics"], -1);
     },
     
     createNewsItem: function createNewsItem(headline, msg, tags, agenda, picURL, returnOnly)
@@ -110,7 +112,7 @@ Game.prototype =
         {
             $("#connectr-feed").removeClass("alert");
             this.showProfile();
-            setInterval(function() { this.loadNextDay(); }.bind(this), 2000);
+            setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
         }
     },
     
@@ -128,8 +130,18 @@ Game.prototype =
     
     loadNextDay: function loadNextDay()
     {
-        this.day++;
+        if (this.day >= this.content.length)
+            return;
+        
+        var newsitems = this.logic.getNewsItems();
+        
+        for (var i = 0; i < newsitems.length; i++)
+            $("#news-container").append(newsitems[i]);
+        
+        if (this.day > 0)
+            this.sndPop.play();
         
         $("#connectr-feed").addClass("alert");
+        this.day++;
     }
 };
