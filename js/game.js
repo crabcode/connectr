@@ -4,7 +4,7 @@ var Game = function Game()
     this.day = 0;
     
     this.interests = {
-        games: 1,
+        gaming: 1,
         sports: 0,
         politics: 0
     }
