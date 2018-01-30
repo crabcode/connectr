@@ -11,6 +11,13 @@ Logic.prototype =
         var todaysContent = this.game.content[this.game.day];
         var interest, maxContent;
         
+        maxContent = todaysContent.length;
+        for(var i = 0; i <= maxContent; i++)
+            content.push(todaysContent[i]);
+        
+        
+        return content;
+        
         //Animals
         interest = this.game.interests.animals;
         maxContent = todaysContent[0].length;
