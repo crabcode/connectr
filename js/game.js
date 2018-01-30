@@ -14,7 +14,7 @@ Game.prototype =
         
         this.profile.append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container"));
         
-        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header")).append($(document.createElement("div")).attr("id", "news-container"));
+        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed")).append($(document.createElement("div")).attr("id", "news-container"));
 
         $(this.container).append(this.profile);
         $(this.container).append(this.newsfeed);
@@ -27,13 +27,16 @@ Game.prototype =
         $("body").append(this.container);
         
         this.createNewsItem("Ausländer sind doof!", "Behaupten wir jetzt einfach mal, weil die dauernd, also wirklich andauernd, so, naja, weißt schon, halt so manchmal, äh, also, ich mein, man kennt das ja...");
+        
+        this.createNewsItem("Nee, du bist doof!", "Das ist ja jetzt auch nicht ganz richtig, find ich.");
     },
     
     createNewsItem: function createNewsItem(headline, msg, picURL, returnOnly)
     {
-        var item = $(document.createElement("div")).addClass("news-item")
-                        .append($(document.createElement("div")).addClass("news-headline").text(headline))
-                        .append($(document.createElement("div")).addClass("news-body").text(msg));
+        var item = $(document.createElement("div")).addClass("news-item-wrapper")
+                        .append($(document.createElement("div")).addClass("news-item")
+                            .append($(document.createElement("div")).addClass("news-headline").text(headline))
+                            .append($(document.createElement("div")).addClass("news-body").text(msg)));
         
         if (picURL)
             item.append($(document.createElement("img")).addClass("news-pic").attr("src", picURL));
