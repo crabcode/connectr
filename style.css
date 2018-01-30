@@ -14,7 +14,11 @@ html, body {
 }
 
 #connectr-logo {
-    width: 180px;
+    background: url('assets/logo.png') no-repeat;
+    background-position: center;
+    height: 48px;
+    margin-left: -20px;
+    width: 160px;
 }
 
 #connectr-profile {
