@@ -43,7 +43,7 @@ Game.prototype =
         
         $("body").append($(document.createElement("div")).attr("id", "connectr-header")
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
-                            .append($(document.createElement("div")).attr("id", "connectr-logo").text("Connectr"))
+                            .append($(document.createElement("div")).attr("id", "connectr-logo"))
                             .append($(document.createElement("div")).attr("id", "connectr-profile").click(this.showProfile.bind(this)))
                             .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))));
         $("body").append(this.container);
@@ -55,34 +55,36 @@ Game.prototype =
                         .append($(document.createElement("div")).addClass("news-item")
                             .append($(document.createElement("div")).addClass("news-headline").text(headline))
                             .append($(document.createElement("div")).addClass("news-body").text(msg)));
-        switch(tags)
-        {
-            case "animals":
-                item.attr("tag", "animal");
-                break;
-            case "sports":
-                item.attr("tag", "sports");
-                break;
-            case "politics":
-                item.attr("tag", "politics");
-                break;
-        }
+        for(var i in tags)
+            switch(tags[i])
+            {
+                case "animals":
+                    item.attr("tag", "animal");
+                    break;
+                case "sports":
+                    item.attr("tag", "sports");
+                    break;
+                case "politics":
+                    item.attr("tag", "politics");
+                    break;
+            }
         
-        switch(agendas)
-        {
-            case "dogs":
-                item.attr("agenda", "dogs");
-                break;
-            case "cats":
-                item.attr("agenda", "cats");
-                break;
-            case "kickers":
-                item.attr("agenda", "kickers");
-                break;
-            case "ballers":
-                item.attr("agenda", "ballers");
-                break;
-        }
+        for(var i in agendas)
+            switch(agendas[i])
+            {
+                case "dogs":
+                    item.attr("agenda", "dogs");
+                    break;
+                case "cats":
+                    item.attr("agenda", "cats");
+                    break;
+                case "kickers":
+                    item.attr("agenda", "kickers");
+                    break;
+                case "ballers":
+                    item.attr("agenda", "ballers");
+                    break;
+            }
         
         if (picURL)
             item.append($(document.createElement("img")).addClass("news-pic").attr("src", picURL));
@@ -109,32 +111,32 @@ Game.prototype =
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
             this.profile.find("#profile-shares-container").append(item);
-            
+            console.log(item);
             switch(item.attr("tag"))
             {
                 case "animals":
-                    this.parentElement.interests.animals++;
+                    this.interests.animals++;
                     break;
                 case "sports":
-                    this.parentElement.interests.sports++;
+                    this.interests.sports++;
                     break;
                 case "politics":
-                    this.parentElement.interests.politics++;
+                    this.interests.politics++;
                     break;
             }
             switch(item.attr("agenda"))
             {
                 case "dogs":
-                    this.parentElement.agendas.dogs++;
+                    this.agendas.dogs++;
                     break;
                 case "cats":
-                    this.parentElement.agendas.cats++;
+                    this.agendas.cats++;
                     break;
                 case "kickers":
-                    this.parentElement.agendas.kickers++;
+                    this.agendas.kickers++;
                     break;
                 case "ballers":
-                    this.parentElement.agendas.ballers++;
+                    this.agendas.ballers++;
                     break;
             }
             
@@ -150,28 +152,28 @@ Game.prototype =
             switch(item.attr("tag"))
             {
                 case "animals":
-                    this.parentElement.interests.animals++;
+                    this.interests.animals++;
                     break;
                 case "sports":
-                    this.parentElement.interests.sports++;
+                    this.interests.sports++;
                     break;
                 case "politics":
-                    this.parentElement.interests.politics++;
+                    this.interests.politics++;
                     break;
             }
             switch(item.attr("agenda"))
             {
                 case "dogs":
-                    this.parentElement.agendas.dogs--;
+                    this.agendas.dogs--;
                     break;
                 case "cats":
-                    this.parentElement.agendas.cats--;
+                    this.agendas.cats--;
                     break;
                 case "kickers":
-                    this.parentElement.agendas.kickers--;
+                    this.agendas.kickers--;
                     break;
                 case "ballers":
-                    this.parentElement.agendas.ballers--;
+                    this.agendas.ballers--;
                     break;
             }
         }
@@ -182,13 +184,13 @@ Game.prototype =
             switch(item.attr("tag"))
             {
                 case "animals":
-                    this.parentElement.interests.animals--;
+                    this.interests.animals--;
                     break;
                 case "sports":
-                    this.parentElement.interests.sports--;
+                    this.interests.sports--;
                     break;
                 case "politics":
-                    this.parentElement.interests.politics--;
+                    this.interests.politics--;
                     break;
             }
         }
@@ -215,9 +217,6 @@ Game.prototype =
     
     loadNextDay: function loadNextDay()
     {
-        if (this.day > this.content.length)
-            return;
-        
         var newsitems = this.logic.getNewsItems();
         
         for (var i = 0; i < newsitems.length; i++)
