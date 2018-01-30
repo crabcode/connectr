@@ -20,7 +20,8 @@ var Game = function Game()
     this.logic = new Logic(this);
     
     this.init();
-    this.loadNextDay();
+    
+    this.register();
 }
 
 Game.prototype =
@@ -32,14 +33,26 @@ Game.prototype =
         this.container = $(document.createElement("div")).attr("id", "container");
         this.profile = $(document.createElement("div")).attr("id", "profile");
         this.newsfeed = $(document.createElement("div")).attr("id", "newsfeed");
+        this.registration = $(document.createElement("div")).attr("id", "registration");
         
-        this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container"));
+        this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container").addClass("empty"));
         
         this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed")).append($(document.createElement("div")).attr("id", "news-container"));
-
-        $(this.container).append(this.profile);
-        $(this.container).append(this.newsfeed);
+        
+        this.registration
+            .append($(document.createElement("div")).attr("id", "register-header").text("Willkommen auf Connectr!"))
+            .append($(document.createElement("div")).attr("id", "register-form").html('\
+                <div id="register-form-header">Registrierung</div>\
+                <div id="register-form-name"><label>Name</label><br/><input id="register-name" type="text"></div>\
+                <div id="register-form-name"><label>Geschlecht</label><br/><input id="register-gender-male" name="register-gender" type="radio" value="male"><label for="register-gender-other">Männlich</label>  <input id="register-gender-female" name="register-gender" type="radio" value="female"><label for="register-gender-female">Weiblich</label> <input id="register-gender-other" name="register-gender" type="radio" value="other"><label for="register-gender-other">Andere</label></div>\
+                <div id="register-form-age"><label>Alter</label><br/><input id="register-age" type="date"></div>\
+                <div id="register-form-pic"><label>Profilbild</label><br/><input id="register-pic" type="file"></div>\
+            ').append($(document.createElement("input")).attr("type", "submit").attr("value", "Registrieren").click(this.register.bind(this))));
+        
         this.profile.hide();
+        this.newsfeed.hide();
+        
+        $(this.container).append(this.registration);
         
         $("body").append($(document.createElement("div")).attr("id", "connectr-header")
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
@@ -110,8 +123,8 @@ Game.prototype =
             item.addClass("response-like");
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
-            this.profile.find("#profile-shares-container").append(item);
-            console.log(item);
+            this.profile.find("#profile-shares-container").append(item).removeClass("empty");
+            
             switch(item.attr("tag"))
             {
                 case "animals":
@@ -147,7 +160,7 @@ Game.prototype =
             item.addClass("response-dislike");
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
-            this.profile.find("#profile-shares-container").append(item);
+            this.profile.find("#profile-shares-container").append(item).removeClass("empty");
             
             switch(item.attr("tag"))
             {
@@ -197,6 +210,7 @@ Game.prototype =
         
         if ($("#news-container").children().length == 0)
         {
+            $("#news-container").addClass("empty");
             $("#connectr-feed").removeClass("alert");
             this.showProfile();
             setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
@@ -222,10 +236,24 @@ Game.prototype =
         for (var i = 0; i < newsitems.length; i++)
             $("#news-container").append(newsitems[i]);
         
-        if (this.day > 0)
-            this.sndPop.play();
+        $("#news-container").removeClass("empty");
+        
+        this.sndPop.play();
         
         $("#connectr-feed").addClass("alert");
         this.day++;
+    },
+    
+    register: function register()
+    {
+        this.name = $(this.registration).find("#register-name").val();
+        this.profile.find("#profile-name").text(this.name);
+        
+        this.registration.remove();
+        $(this.container).append(this.profile);
+        $(this.container).append(this.newsfeed);
+        
+        this.showProfile();
+        setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
     }
 };

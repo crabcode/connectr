@@ -28,7 +28,7 @@ html, body {
     cursor: pointer;
     position: absolute;
     left: 50%;
-    margin-left: 190px;
+    margin-left: 236px;
     top: 6px;
     width: 36px;
     height: 36px;
@@ -41,8 +41,8 @@ html, body {
     cursor: pointer;
     position: absolute;
     left: 50%;
-    margin-left: 236px;
-    top: 8px;
+    margin-left: 190px;
+    top: 9px;
     width: 32px;
     height: 32px;
 }
@@ -69,6 +69,7 @@ html, body {
 }
 
 #container, #connectr-header-container {
+    border-radius: 0 0 10px 10px;
     width: 500px;
     margin: auto;
 }
@@ -78,6 +79,44 @@ html, body {
     padding: 15px 20px;
 }
 
+#register-header {
+    font-size: 24pt;
+    font-weight: bold;
+    line-height: 2;
+    text-align: center;
+}
+
+#register-form {
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+#register-form div {
+    margin:10px 0 ;
+}
+
+#register-form label {
+    line-height: 2;
+}
+
+#register-form input[type=text], #register-form input[type=date], #register-form input[type=file] {
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 5px 8px;
+    width: 100%;
+}
+
+#register-form input[type=submit] {
+    margin: 20px 0;
+}
+
+#register-form-header {
+    font-size: 18pt;
+    line-height: 2;
+    text-align: center;
+}
+
 #profile-name {
     font-size: 24pt;
     text-align: center;
@@ -85,7 +124,7 @@ html, body {
 
 #profile-pic {
     border: 1px solid #7f3;
-    background: url('assets/profile.jpg');
+    background: url('assets/crabman.jpg');
     background-size: cover;
     width: 150px;
     height: 150px;
@@ -94,9 +133,17 @@ html, body {
 
 #profile-feed-header, #news-header {
     font-size: 16pt;
-    border-b ottom: 1px solid #7f3;
-    margin-bo ttom: 20px;
     padding-bottom: 10px;
+}
+
+#profile-shares-container.empty::after {
+    border-top: 1px solid #7f3;
+    padding-top: 15px;
+    content:'Du hast noch nichts geteilt.';
+    color:#bca;
+    display: block;
+    text-align: center;
+    width:100%;
 }
 
 #profile-shares-container .news-item-wrapper.response-like::before {
@@ -126,6 +173,16 @@ html, body {
 
 #profile-interests {
     font-size: 12pt;
+}
+
+#news-container.empty::after {
+    border-top: 1px solid #7f3;
+    padding-top: 15px;
+    content:'Wir haben derzeit keine neuen Inhalte für dich.';
+    color:#bca;
+    display: block;
+    text-align: center;
+    width:100%;
 }
 
 .news-item-wrapper {
