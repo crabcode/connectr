@@ -8,6 +8,7 @@ var Game = function Game()
         politics: 1
     }
     
+    this.content = new createContent(this).content;
     this.init();
 }
 
@@ -19,24 +20,30 @@ Game.prototype =
         this.profile = $(document.createElement("div")).attr("id", "profile");
         this.newsfeed = $(document.createElement("div")).attr("id", "newsfeed");
         
-        this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container"));
+        this.profile.append($(document.createElement("div")).attr("id", "profile-pic"))
+            .append($(document.createElement("div")).attr("id", "profile-name").text(this.name))
+            .append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares"))
+            .append($(document.createElement("div")).attr("id", "profile-shares-container"));
         
-        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed")).append($(document.createElement("div")).attr("id", "news-container"));
+        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed"))
+            .append($(document.createElement("div")).attr("id", "news-container"));
 
         $(this.container).append(this.profile);
         $(this.container).append(this.newsfeed);
+        
         this.profile.hide();
         
         $("body").append($(document.createElement("div")).attr("id", "connectr-header")
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
-                            .append($(document.createElement("div")).attr("id", "connectr-logo").text("Connectr"))
-                            .append($(document.createElement("div")).attr("id", "connectr-profile").addClass("alert").click(this.showProfile.bind(this)))
-                            .append($(document.createElement("div")).attr("id", "connectr-feed").addClass("alert").click(this.showNewsfeed.bind(this)))));
+                        .append($(document.createElement("div")).attr("id", "connectr-logo").text("Connectr"))
+                        .append($(document.createElement("div")).attr("id", "connectr-profile").addClass("alert").click(this.showProfile.bind(this)))
+                        .append($(document.createElement("div")).attr("id", "connectr-feed").addClass("alert").click(this.showNewsfeed.bind(this)))));
+        
         $("body").append(this.container);
         
-        this.createNewsItem("Ausländer sind doof!", "Behaupten wir jetzt einfach mal, weil die dauernd, also wirklich andauernd, so, naja, weißt schon, halt so manchmal, äh, also, ich mein, man kennt das ja...", ["politics"], 1);
+        for(var i = 0; i < this.content[0].length; i++)
+            $("#news-container").append(this.content[0][i]);
         
-        this.createNewsItem("Nee, du bist doof!", "Das ist ja jetzt auch nicht ganz richtig, find ich.", ["politics"], -1);
     },
     
     createNewsItem: function createNewsItem(headline, msg, tags, agenda, picURL, returnOnly)
