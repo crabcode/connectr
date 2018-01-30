@@ -1,0 +1,78 @@
+html, body {
+    background-color: #dfc;
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+    height:100%;
+}
+
+#connectr-header {
+    background-color: #7f3;
+    color:#fff;
+    font-size: 30pt;
+    height: 50px;
+}
+
+#container, #connectr-header-container {
+    width: 500px;
+    margin: auto;
+}
+
+#container {
+    background-color: #fff;
+    padding: 15px 20px;
+}
+
+#profile-name {
+    font-size: 24pt;
+    text-align: center;
+}
+
+#profile-feed-header {
+    font-size: 16pt;
+    border-bottom: 1px solid #7f3;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+#profile-shares-container .news-item.response-like::before {
+    content: "Dir gefällt:";
+    display: block;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+#profile-shares-container .news-item.response-dislike::before {
+    content: "Dir gefällt nicht:";
+    display: block;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+.news-item {
+    border: 1px solid #7f3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #cfa;
+    padding: 12px 15px;
+}
+
+.news-headline {
+    font-weight: bold;
+    font-size: 16pt;
+    margin-bottom: 5px;
+}
+
+.news-response {
+    margin-top: 10px;
+    text-align: center;
+}
+.news-response div {
+    border: 1px solid #cea;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    width: 130px;
+    padding: 5px;
+    margin: 0 5px;
+    text-align: center;
+}
