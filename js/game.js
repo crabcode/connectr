@@ -9,6 +9,13 @@ var Game = function Game()
         politics: 1
     }
     
+    this.agendas = {
+        dogs: 0,
+        cats: 0,
+        kickers: 0,
+        ballers: 0
+    }
+    
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
     
@@ -42,7 +49,7 @@ Game.prototype =
         $("body").append(this.container);
     },
     
-    createNewsItem: function createNewsItem(headline, msg, tags, agenda, picURL, returnOnly)
+    createNewsItem: function createNewsItem(headline, msg, tags, agendas, picURL, returnOnly)
     {
         var item = $(document.createElement("div")).addClass("news-item-wrapper")
                         .append($(document.createElement("div")).addClass("news-item")
@@ -61,7 +68,21 @@ Game.prototype =
                 break;
         }
         
-        item.attr("agenda", agenda);
+        switch(agendas)
+        {
+            case "dogs":
+                item.attr("agenda", "dogs");
+                break;
+            case "cats":
+                item.attr("agenda", "cats");
+                break;
+            case "kickers":
+                item.attr("agenda", "kickers");
+                break;
+            case "ballers":
+                item.attr("agenda", "ballers");
+                break;
+        }
         
         if (picURL)
             item.append($(document.createElement("img")).addClass("news-pic").attr("src", picURL));
@@ -89,12 +110,33 @@ Game.prototype =
             item.append($(document.createElement("div")).addClass("share-response"));
             this.profile.find("#profile-shares-container").append(item);
             
-            if(item.hasClass("animals"))
-                this.parentElement.interests.animals++;
-            if(item.hasClass("sports"))
-                this.parentElement.interests.sports++;
-            if(item.hasClass("politics"))
-                this.parentElement.interests.politics++;
+            switch(item.attr("tag"))
+            {
+                case "animals":
+                    this.parentElement.interests.animals++;
+                    break;
+                case "sports":
+                    this.parentElement.interests.sports++;
+                    break;
+                case "politics":
+                    this.parentElement.interests.politics++;
+                    break;
+            }
+            switch(item.attr("agenda"))
+            {
+                case "dogs":
+                    this.parentElement.agendas.dogs++;
+                    break;
+                case "cats":
+                    this.parentElement.agendas.cats++;
+                    break;
+                case "kickers":
+                    this.parentElement.agendas.kickers++;
+                    break;
+                case "ballers":
+                    this.parentElement.agendas.ballers++;
+                    break;
+            }
             
         }
         else if ($(e.currentTarget).hasClass("news-response-dislike"))
@@ -104,9 +146,52 @@ Game.prototype =
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
             this.profile.find("#profile-shares-container").append(item);
+            
+            switch(item.attr("tag"))
+            {
+                case "animals":
+                    this.parentElement.interests.animals++;
+                    break;
+                case "sports":
+                    this.parentElement.interests.sports++;
+                    break;
+                case "politics":
+                    this.parentElement.interests.politics++;
+                    break;
+            }
+            switch(item.attr("agenda"))
+            {
+                case "dogs":
+                    this.parentElement.agendas.dogs--;
+                    break;
+                case "cats":
+                    this.parentElement.agendas.cats--;
+                    break;
+                case "kickers":
+                    this.parentElement.agendas.kickers--;
+                    break;
+                case "ballers":
+                    this.parentElement.agendas.ballers--;
+                    break;
+            }
         }
         else
+        {
             item.remove();
+            
+            switch(item.attr("tag"))
+            {
+                case "animals":
+                    this.parentElement.interests.animals--;
+                    break;
+                case "sports":
+                    this.parentElement.interests.sports--;
+                    break;
+                case "politics":
+                    this.parentElement.interests.politics--;
+                    break;
+            }
+        }
         
         if ($("#news-container").children().length == 0)
         {
@@ -130,7 +215,7 @@ Game.prototype =
     
     loadNextDay: function loadNextDay()
     {
-        if (this.day >= this.content.length)
+        if (this.day > this.content.length)
             return;
         
         var newsitems = this.logic.getNewsItems();
