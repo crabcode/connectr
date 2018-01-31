@@ -6,7 +6,7 @@ var Game = function Game()
     this.interests = {
         cats: 1
     }
-    //this.interests = {cats: 1,dogs: 3,mama: 2}
+    this.interests = {cats: 1,dogs: 3,mama: 2}
     
     this.worldview = 0;
     this.worldviewChange = [];
@@ -277,15 +277,14 @@ Game.prototype =
         this.byebye.hide();
         
         var graph = this.graph.drawLineGraph(this.worldviewChange);
-        $(this.container).append(graph);
-        
-        graph = this.graph.drawBarGraph(this.interests);
-        $(this.container).append(graph);
+        var graph2 = this.graph.drawBarGraph(this.interests);
         
         this.graphPage = $(document.createElement("div")).attr("id", "graph")
             .append($(document.createElement("div")).attr("id", "graph-header").text("Dein Sharing-Verhalten"))
             .append($(document.createElement("div")).attr("id", "graph-subheader").text("Politische Ausrichtung"))
-            .append(graph);
+            .append(graph)
+            .append($(document.createElement("div")).attr("id", "graph-subheader").text("Interessen"))
+            .append(graph2);
         
         $(this.container).append(this.graphPage);
     },
