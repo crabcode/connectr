@@ -8,16 +8,15 @@ var Game = function Game()
     }
     
     this.worldview = 0;
-    this.worldviewChange = [0];
+    this.worldviewChange = [];
     
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
     this.graph = new Graph(this);
     
     this.init();
-    
-    //this.graph.drawGraph(this.worldviewChange);
-    this.register();
+    //this.showTrialOver();
+    //this.register();
 }
 
 Game.prototype =
@@ -180,7 +179,6 @@ Game.prototype =
             change = value * mod / 2;
         
         this.worldview += change;
-        this.worldviewChange.push(this.worldview);
         
         console.log("Updated worldview: " + this.worldview + " ("+change+")");
     },
@@ -218,6 +216,8 @@ Game.prototype =
             $("title").text("(!) Connectr");
             $("#connectr-notification").css("opacity", "0").show().delay(500).animate({ opacity: 1}, 500);
             this.day++;
+            
+            this.worldviewChange.push(this.worldview);
         }
         else
             this.showTrialOver();
