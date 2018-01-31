@@ -14,7 +14,7 @@ var Game = function Game()
     
     this.init();
     
-    this.register();
+    //this.register();
 }
 
 Game.prototype =
@@ -27,6 +27,7 @@ Game.prototype =
         this.profile = $(document.createElement("div")).attr("id", "profile");
         this.newsfeed = $(document.createElement("div")).attr("id", "newsfeed");
         this.registration = $(document.createElement("div")).attr("id", "registration");
+        this.avatar = $(document.createElement("div")).attr("id", "avatar");
         
         this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container").addClass("empty"));
         
@@ -34,16 +35,26 @@ Game.prototype =
         
         this.registration
             .append($(document.createElement("div")).attr("id", "register-header").text("Willkommen auf Connectr!"))
+            .append($(document.createElement("div")).attr("id", "register-tagline").text("Jetzt 7 Tage kostenlos ausprobieren!"))
             .append($(document.createElement("div")).attr("id", "register-form").html('\
-                <div id="register-form-header">Melde dich jetzt für deinen 7-tägigen Probezugang an!</div>\
-                <div id="register-form-name"><label>Name</label><br/><input id="register-name" type="text"></div>\
-                <div id="register-form-name"><label>Geschlecht</label><br/><input id="register-gender-male" name="register-gender" type="radio" value="male"><label for="register-gender-other">Männlich</label>  <input id="register-gender-female" name="register-gender" type="radio" value="female"><label for="register-gender-female">Weiblich</label> <input id="register-gender-other" name="register-gender" type="radio" value="other"><label for="register-gender-other">Andere</label></div>\
-                <div id="register-form-age"><label>Alter</label><br/><input id="register-age" type="date"></div>\
-                <div id="register-form-pic"><label>Profilbild</label><br/><input id="register-pic" type="file"></div>\
-            ').append($(document.createElement("input")).attr("type", "submit").attr("value", "Registrieren").click(this.register.bind(this))));
+                <div id="register-form-name"><br/><input id="register-name" placeholder="Name" type="text"></div>\
+                <div id="register-form-name"><br/><select id="register-gender" name="register-gender"><option value="" disabled selected>Geschlecht</option><option value="male">Männlich</option><option value="female">Weiblich</option><option value="other">Anderes</option></div>\
+                <div id="register-form-age"><input id="register-age" type="date"></div>\
+            ')
+            .append($(document.createElement("input")).attr("type", "submit").attr("value", "Registrieren*").click(this.register.bind(this)))
+            .append($(document.createElement("div")).attr("id", "register-disclaimer").text("*Mit der Registrierung erklärst du dich mit unseren AGBs einverstanden.")));
+        
+        this.avatar
+            .append($(document.createElement("div")).attr("id", "register-header").text("Profilbild"))
+            .append($(document.createElement("div")).attr("id", "register-tagline").text("Bevor es los geht, lade ein Profilbild hoch."))
+            .append($(document.createElement("div")).attr("id", "register-form").html('\
+                <div id="register-form-pic"><input id="register-pic" type="file"></div>\
+            '))
+            .append($(document.createElement("input")).attr("id", "start-button").attr("type", "submit").attr("value", "Los geht's!").click(this.start.bind(this)));
         
         this.profile.hide();
         this.newsfeed.hide();
+        this.avatar.hide();
         
         $(this.container).append(this.registration);
         
@@ -188,7 +199,7 @@ Game.prototype =
         this.profile.find("#profile-name").text(this.name);
         
         // Add interests based on gender
-        var gender = $(this.registration).find("input[name=register-gender]:checked").val();
+        var gender = $("#register-gender").val();
         switch(gender)
         {
             case "male":
@@ -215,10 +226,28 @@ Game.prototype =
         }
         
         this.registration.remove();
+        $(this.container).append(this.avatar);
+        this.avatar.show();
+    },
+    
+    start: function start()
+    {
+        this.avatar.remove();
         $(this.container).append(this.profile);
         $(this.container).append(this.newsfeed);
         
         this.showProfile();
         setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
+    },
+    
+    showGraph: function showGraph()
+    {
+        this.graph = $(document.createElement("div")).attr("id", "graph");
+        this.graph
+            .append($(document.createElement("div")).attr("id", "graph-header").text("Graph"));
+        
+        $(this.container).append(this.graph);
+        this.newsfeed.hide();
+        this.profile.hide();
     }
 };
