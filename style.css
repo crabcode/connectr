@@ -7,12 +7,8 @@ html, body {
 }
 
 canvas {
-    background-color: #dfc;
     font-family: sans-serif;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    width:80%;
+    margin-left: -2px;
 }
 
 #connectr-header {
@@ -143,6 +139,15 @@ canvas {
     height: 40px;
 }
 
+#graph-header {
+    text-align: center;
+}
+
+#graph-subheader {
+    text-decoration: underline;
+    margin-top: 10px;
+}
+
 #register-header, #byebye-header {
     font-size: 24pt;
     font-weight: bold;
@@ -241,7 +246,7 @@ select {
     margin: 20px auto!important;
 }
 
-#profile-feed-header, #news-header {
+#profile-feed-header, #news-header, #graph-header {
     font-size: 16pt;
     padding-bottom: 10px;
 }
