@@ -6,6 +6,15 @@ html, body {
     height:100%;
 }
 
+canvas {
+    background-color: #dfc;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width:80%;
+}
+
 #connectr-header {
     background-color: #7f3;
     color:#fff;

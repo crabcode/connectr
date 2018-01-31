@@ -11,9 +11,11 @@ var Game = function Game()
     
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
+    this.graph = new Graph(this);
     
     this.init();
     
+    //this.graph.drawGraph();
     //this.register();
 }
 
