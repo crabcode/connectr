@@ -14,7 +14,7 @@ var Game = function Game()
     
     this.init();
     
-    this.register();
+    //this.register();
 }
 
 Game.prototype =
@@ -34,8 +34,8 @@ Game.prototype =
         
         this.registration
             .append($(document.createElement("div")).attr("id", "register-header").text("Willkommen auf Connectr!"))
+            .append($(document.createElement("div")).attr("id", "register-tagline").text("Jetzt 7 Tage kostenlos ausprobieren!"))
             .append($(document.createElement("div")).attr("id", "register-form").html('\
-                <div id="register-form-header">Melde dich jetzt für deinen 7-tägigen Probezugang an!</div>\
                 <div id="register-form-name"><label>Name</label><br/><input id="register-name" type="text"></div>\
                 <div id="register-form-name"><label>Geschlecht</label><br/><input id="register-gender-male" name="register-gender" type="radio" value="male"><label for="register-gender-other">Männlich</label>  <input id="register-gender-female" name="register-gender" type="radio" value="female"><label for="register-gender-female">Weiblich</label> <input id="register-gender-other" name="register-gender" type="radio" value="other"><label for="register-gender-other">Andere</label></div>\
                 <div id="register-form-age"><label>Alter</label><br/><input id="register-age" type="date"></div>\
