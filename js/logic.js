@@ -6,7 +6,6 @@ var Logic = function Logic(game)
 
 Logic.prototype =
 {
-    
     getNewsItems: function getNewsItems()
     {
         // Add new content to backlog front
