@@ -238,7 +238,7 @@ Game.prototype =
                 this.interests.sports = 1;
                 break;
             case "female":
-                this.interests.celebrities = 1;
+                this.interests.gossip = 1;
                 break;
             default:
                 this.interests.politics = 1;

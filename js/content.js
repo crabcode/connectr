@@ -28,7 +28,7 @@ var createContent = function(game)
         this.game.createNewsItem(
         "Das tragen die Stars!",
         "Was haben Kim Kardashian, Emma Watson und Jessica Chastain gemeinsam? Finden Sie es heraus, in unserer großen Reportage des...",
-        ["celebrities"],
+        ["gossip"],
         1,
         "assets/roterteppich.jpg",true),
 
@@ -37,7 +37,21 @@ var createContent = function(game)
         "",
         ["cats"],
         0,
-        "assets/cat-poop.jpg",true)
+        "assets/cat-poop.jpg",true),
+
+        this.game.createNewsItem(
+        "Techniktrends 2018",
+        "Was ist in? Was ist out? Erfahre alles, was du für dieses Jahr wissen musst in unserem Techniktrends-Überblick!",
+        ["tech"],
+        0,
+        "assets/tech.jpg",true),
+
+        this.game.createNewsItem(
+        "Finanztipps 2018 - So investieren die Profis!",
+        "Taschengeld aufbessern oder Haus finanzieren? Mit diesen Tipps können Sie ihr Erspartes zu einem Vermögen verwandeln!",
+        ["finance"],
+        1,
+        "assets/finance.jpg",true)
     ],
     [//Day2
         this.game.createNewsItem(
@@ -66,14 +80,7 @@ var createContent = function(game)
         "Wir haben uns die Gesetzesänderung angeschaut. Hier unser Fazit!",
         ["politics"],
         -1,
-        "assets/politik.jpg",true),
-
-        this.game.createNewsItem(
-        "Techniktrends 2018",
-        "Was ist in? Was ist out? Erfahre alles, was du für dieses Jahr wissen musst in unserem Techniktrends-Überblick!",
-        ["tech"],
-        0,
-        "assets/tech.jpg",true)
+        "assets/politik.jpg",true)
     ],
     [//Day3
         this.game.createNewsItem(
@@ -102,14 +109,7 @@ var createContent = function(game)
         "",
         ["cats"],
         0,
-        "assets/cat-hardmode.jpg",true),
-
-        this.game.createNewsItem(
-        "Finanztipps 2018 - So investieren die Profis!",
-        "Taschengeld aufbessern oder Haus finanzieren? Mit diesen Tipps können Sie ihr Erspartes zu einem Vermögen verwandeln!",
-        ["finance"],
-        1,
-        "assets/finance.jpg",true)
+        "assets/cat-hardmode.jpg",true)
     ],
     [//Day3
         this.game.createNewsItem(
