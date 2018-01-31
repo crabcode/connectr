@@ -4,17 +4,12 @@ var Game = function Game()
     this.day = 0;
     
     this.interests = {
-        animals: 1,
-        sports: 1,
-        politics: 1
+        gaming: 1,
+        sports: 0,
+        politics: 0
     }
     
-    this.agendas = {
-        dogs: 0,
-        cats: 0,
-        kickers: 0,
-        ballers: 0
-    }
+    this.worldview = 0;
     
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
@@ -62,42 +57,15 @@ Game.prototype =
         $("body").append(this.container);
     },
     
-    createNewsItem: function createNewsItem(headline, msg, tags, agendas, picURL, returnOnly)
+    createNewsItem: function createNewsItem(headline, msg, tags, view, picURL, returnOnly)
     {
         var item = $(document.createElement("div")).addClass("news-item-wrapper")
                         .append($(document.createElement("div")).addClass("news-item")
                             .append($(document.createElement("div")).addClass("news-headline").text(headline))
                             .append($(document.createElement("div")).addClass("news-body").text(msg)));
-        for(var i in tags)
-            switch(tags[i])
-            {
-                case "animals":
-                    item.attr("tag", "animal");
-                    break;
-                case "sports":
-                    item.attr("tag", "sports");
-                    break;
-                case "politics":
-                    item.attr("tag", "politics");
-                    break;
-            }
         
-        for(var i in agendas)
-            switch(agendas[i])
-            {
-                case "dogs":
-                    item.attr("agenda", "dogs");
-                    break;
-                case "cats":
-                    item.attr("agenda", "cats");
-                    break;
-                case "kickers":
-                    item.attr("agenda", "kickers");
-                    break;
-                case "ballers":
-                    item.attr("agenda", "ballers");
-                    break;
-            }
+        item.attr("tags", tags);
+        item.attr("worldview", view);
         
         if (picURL)
             item.append($(document.createElement("img")).addClass("news-pic").attr("src", picURL));
@@ -125,33 +93,8 @@ Game.prototype =
             item.append($(document.createElement("div")).addClass("share-response"));
             this.profile.find("#profile-shares-container").append(item).removeClass("empty");
             
-            switch(item.attr("tag"))
-            {
-                case "animals":
-                    this.interests.animals++;
-                    break;
-                case "sports":
-                    this.interests.sports++;
-                    break;
-                case "politics":
-                    this.interests.politics++;
-                    break;
-            }
-            switch(item.attr("agenda"))
-            {
-                case "dogs":
-                    this.agendas.dogs++;
-                    break;
-                case "cats":
-                    this.agendas.cats++;
-                    break;
-                case "kickers":
-                    this.agendas.kickers++;
-                    break;
-                case "ballers":
-                    this.agendas.ballers++;
-                    break;
-            }
+            this.updateInterests(item.attr("tags").split(","), 1);
+            this.updateWorldview(Number(item.attr("worldview")), 1);
             
         }
         else if ($(e.currentTarget).hasClass("news-response-dislike"))
@@ -162,50 +105,13 @@ Game.prototype =
             item.append($(document.createElement("div")).addClass("share-response"));
             this.profile.find("#profile-shares-container").append(item).removeClass("empty");
             
-            switch(item.attr("tag"))
-            {
-                case "animals":
-                    this.interests.animals++;
-                    break;
-                case "sports":
-                    this.interests.sports++;
-                    break;
-                case "politics":
-                    this.interests.politics++;
-                    break;
-            }
-            switch(item.attr("agenda"))
-            {
-                case "dogs":
-                    this.agendas.dogs--;
-                    break;
-                case "cats":
-                    this.agendas.cats--;
-                    break;
-                case "kickers":
-                    this.agendas.kickers--;
-                    break;
-                case "ballers":
-                    this.agendas.ballers--;
-                    break;
-            }
+            this.updateInterests(item.attr("tags").split(","), 1);
+            this.updateWorldview(Number(item.attr("worldview")), -1);
         }
         else
         {
             item.remove();
-            
-            switch(item.attr("tag"))
-            {
-                case "animals":
-                    this.interests.animals--;
-                    break;
-                case "sports":
-                    this.interests.sports--;
-                    break;
-                case "politics":
-                    this.interests.politics--;
-                    break;
-            }
+            this.updateInterests(item.attr("tags").split(","), -1);
         }
         
         if ($("#news-container").children().length == 0)
@@ -215,6 +121,29 @@ Game.prototype =
             this.showProfile();
             setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
         }
+    },
+    
+    updateInterests: function updateInterests(tags, mod)
+    {
+        var changelog = "";
+        var tag;
+        for(var i in tags)
+        {
+            tag = tags[i];
+            if(this.interests.hasOwnProperty(tag))
+                this.interests[tag] += mod;
+            else
+                this.interests[tag] = mod;
+            changelog += "\n "+tag+": "+this.interests[tag]+" ("+mod+")";
+        }
+        console.log("Updated interests: " +changelog);
+    },
+    
+    updateWorldview: function updateWorldview(value, mod)
+    {
+        var change = value * mod;
+        this.worldview += change;
+        console.log("Updated worldview: " + this.worldview + " ("+change+")");
     },
     
     showNewsfeed: function showNewsfeed()
