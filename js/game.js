@@ -66,7 +66,12 @@ Game.prototype =
         item.attr("worldview", view);
         
         if (picURL)
-            item.append($(document.createElement("img")).addClass("news-pic").attr("src", picURL));
+        {
+            item.find(".news-item").prepend($(document.createElement("div")).addClass("news-pic").css("background-image", "url('" + picURL + "')"));
+            
+            if (headline == "")
+                item.attr("piconly", "true");
+        }
         
         item.find(".news-item").append($(document.createElement("div")).addClass("news-response")
                    .append($(document.createElement("div")).addClass("news-response-like").text("Like").click(this.respond.bind(this)))
