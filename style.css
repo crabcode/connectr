@@ -77,6 +77,37 @@ canvas {
     height: 16px;
 }
 
+#connectr-notification {
+    background: #fff;
+    border: 1px solid #3f6;
+    border-radius: 10px;
+    background: #fff!important;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    color:#000;
+    cursor: pointer;
+    font-size: 12pt;
+    left:50%;
+    margin-left: -22px;
+    padding: 10px 12px;
+    padding-bottom: 8px;
+    position: absolute;
+    text-align: center;
+    top: 48px;
+    width: 230px;
+    height: 20px;
+}
+
+#connectr-notification::before {
+    background: url('assets/arrow.png');
+    content: '';
+    display: block;
+    left:220px;
+    position: absolute;
+    top:-10px;
+    width:20px;
+    height:10px;
+}
+
 #container, #connectr-header-container {
     border-radius: 0 0 10px 10px;
     width: 500px;

@@ -76,7 +76,8 @@ Game.prototype =
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
                             .append($(document.createElement("div")).attr("id", "connectr-logo"))
                             .append($(document.createElement("div")).attr("id", "connectr-profile").click(this.showProfile.bind(this)))
-                            .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))));
+                            .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))
+                            .append($(document.createElement("div")).attr("id", "connectr-notification").text("Wir haben neue Inhalte für dich!").hide().click(this.showNewsfeed.bind(this)))));
         $("body").append(this.container);
     },
     
@@ -111,6 +112,7 @@ Game.prototype =
     
     respond: function respond(e)
     {
+        $("#connectr-notification").stop().hide();
         var item = $(e.currentTarget.parentElement.parentElement.parentElement);
         
         if ($(e.currentTarget).hasClass("news-response-like"))
@@ -185,12 +187,14 @@ Game.prototype =
     
     showNewsfeed: function showNewsfeed()
     {
+        $("#connectr-notification").stop().hide();
         this.profile.hide();
         this.newsfeed.show();
     },
     
     showProfile: function showProfile()
     {
+        $("#connectr-notification").stop().hide();
         this.newsfeed.hide();
         this.profile.show();
     },
@@ -212,6 +216,7 @@ Game.prototype =
 
             $("#connectr-feed").addClass("alert");
             $("title").text("(!) Connectr");
+            $("#connectr-notification").css("opacity", "0").show().delay(500).animate({ opacity: 1}, 500);
             this.day++;
         }
         else
