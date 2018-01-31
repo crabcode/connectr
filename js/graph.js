@@ -7,8 +7,8 @@ var Graph = function Graph(game)
     
     this.sections = 8;
     
-    this.Val_max = 50;
-    this.Val_min = -50;
+    this.Val_max = 90;
+    this.Val_min = -90;
     
     // Values for the Data Plot, they can also be obtained from a external file
     // this.worldview =  [0, 1, 3, 4, 5, 10, 15, 20, 25];
@@ -26,6 +26,12 @@ Graph.prototype =
         this.context.fillStyle = "#0099ff";
         
         this.sections = data.length;
+        
+        var max = Math.max.apply(Math, data);
+        var min = Math.max.apply(Math, data);
+        var absMax = Math.max(max, Math.abs(min));
+        this.Val_max = absMax;
+        this.Val_min = -absMax;
         
         // Set Axis
         var stepSize = 10;
@@ -64,7 +70,7 @@ Graph.prototype =
 
         // Plot Data
         this.context.strokeStyle="#FF0066";
-        this.plotData(this.worldview);
+        this.plotData(data);
         
         return this.canvas;
     },
