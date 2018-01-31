@@ -133,6 +133,7 @@ Game.prototype =
         {
             $("#news-container").addClass("empty");
             $("#connectr-feed").removeClass("alert");
+            $("title").text("Connectr");
             this.showProfile();
             setTimeout(function() { this.loadNextDay(); }.bind(this), 2000);
         }
@@ -191,6 +192,7 @@ Game.prototype =
         this.sndPop.play();
         
         $("#connectr-feed").addClass("alert");
+        $("title").text("(!) Connectr");
         this.day++;
     },
     
