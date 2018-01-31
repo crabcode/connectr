@@ -10,13 +10,15 @@ var Graph = function Graph(game)
     this.Val_max = 90;
     this.Val_min = -90;
     
+    this.y;
+    
     // Values for the Data Plot, they can also be obtained from a external file
     // this.worldview =  [0, 1, 3, 4, 5, 10, 15, 20, 25];
 }
 
 Graph.prototype = 
 {
-    drawGraph: function drawGraph(data)
+    drawLineGraph: function drawLineGraph(data)
     {
         // Create Canvas
         this.canvas = document.createElement("canvas");
@@ -70,12 +72,12 @@ Graph.prototype =
 
         // Plot Data
         this.context.strokeStyle="#FF0066";
-        this.plotData(data);
+        this.plotDataLine(data);
         
         return this.canvas;
     },
 
-    plotData: function plotData(dataSet)
+    plotDataLine: function plotDataLine(dataSet)
     {
         this.context.beginPath();
         this.context.moveTo(0, dataSet[0]);
@@ -83,5 +85,84 @@ Graph.prototype =
             this.context.lineTo(i * this.xScale, dataSet[i]);
         }
         this.context.stroke();
+    },
+    
+    drawBarGraph: function drawBarGraph(data)
+    {
+        // Create Canvas
+        this.canvas = document.createElement("canvas");
+        this.canvas.height = 250;
+        this.canvas.width = 500;
+        this.context = this.canvas.getContext("2d");
+        this.context.fillStyle = "#000";
+        
+        // Get interests
+        var interests = [];
+        for(var i in data)
+            interests.push([i, data[i]]);
+        
+        interests.sort(function(a, b){ return b[1] - a[1]; });
+        
+        // Get # and size of bars
+        this.sections = interests.length;
+        this.Val_max = interests[0][1];
+
+        var stepSize = 1;
+        var columns = interests.length;
+        var columnSize = 50;
+        var rowSize = 60;
+        var margin = 10;
+
+        this.yScale = (this.canvas.height - columnSize - margin) / (this.Val_max);
+        this.xScale = (this.canvas.width - rowSize) / (this.sections + 1);
+
+        this.context.strokeStyle="#cea"; // background black lines
+        this.context.beginPath();
+        
+            // draw lines in the background
+        this.context.font = "16 pt Helvetica"
+        var count =  0;
+        for (scale=this.Val_max;scale>=0;scale = scale - stepSize) {
+            this.y = columnSize + (this.yScale * count * stepSize); 
+            this.context.fillText(scale, margin,this.y + margin);
+            this.context.moveTo(rowSize,this.y)
+            this.context.lineTo(this.canvas.width,this.y)
+            count++;
+        }
+        this.context.stroke();
+
+            // print names of each data entry
+        this.context.font = "20 pt Verdana";
+        this.context.textBaseline="bottom";
+        for (i=0;i<columns;i++) {
+            this.computeHeight(interests[i][1]);
+            this.context.fillText(interests[i][0], this.xScale * (i+1),this.y - margin);
+        }
+
+            // shadow for graph's bar lines with color and offset
+
+        this.context.fillStyle="#9933FF;";
+      this.context.shadowColor = 'rgba(128,128,128, 0.5)';
+
+      //shadow offset along X and Y direction 
+        this.context.shadowOffsetX = 9;
+        this.context.shadowOffsetY = 3;
+
+            // translate to bottom of graph  inorder to match the data 
+      this.context.translate(0,this.canvas.height - margin);
+        this.context.scale(this.xScale,-1 * this.yScale);
+
+            // draw each graph bars	
+        for (i=0;i<columns;i++) {
+            this.context.fillRect(i+1, 0, 0.3, interests[i][1]);
+        }
+        
+        return this.canvas;
+    },
+    
+
+    computeHeight: function computeHeight(value)
+    {
+        this.y = this.canvas.height - value * this.yScale ;	
     }
 }

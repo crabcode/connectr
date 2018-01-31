@@ -6,6 +6,7 @@ var Game = function Game()
     this.interests = {
         cats: 1
     }
+    this.interests = {cats: 1,dogs: 3,mama: 2}
     
     this.worldview = 0;
     this.worldviewChange = [];
@@ -15,7 +16,7 @@ var Game = function Game()
     this.graph = new Graph(this);
     
     this.init();
-    //this.showTrialOver();
+    this.showTrialOver();
     //this.register();
 }
 
@@ -273,7 +274,10 @@ Game.prototype =
         
         $(this.container).append(this.graphPage);
         
-        var graph = this.graph.drawGraph(this.worldviewChange);
+        var graph = this.graph.drawLineGraph(this.worldviewChange);
+        $(this.container).append(graph);
+        
+        graph = this.graph.drawBarGraph(this.interests);
         $(this.container).append(graph);
         
         this.byebye.hide();
