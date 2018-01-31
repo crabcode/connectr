@@ -6,17 +6,18 @@ var Game = function Game()
     this.interests = {
         cats: 1
     }
-    this.interests = {cats: 1,dogs: 3,mama: 2}
+    //this.interests = {cats: 1,dogs: 3,mama: 2}
     
     this.worldview = 0;
     this.worldviewChange = [];
+    //this.worldviewChange = [0,5,10,20];
     
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
     this.graph = new Graph(this);
     
     this.init();
-    this.showTrialOver();
+    //this.showTrialOver();
     //this.register();
 }
 
