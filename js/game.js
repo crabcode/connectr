@@ -4,9 +4,7 @@ var Game = function Game()
     this.day = 0;
     
     this.interests = {
-        gaming: 1,
-        sports: 0,
-        politics: 0
+        cats: 1
     }
     
     this.worldview = 0;
@@ -146,7 +144,13 @@ Game.prototype =
     
     updateWorldview: function updateWorldview(value, mod)
     {
-        var change = value * mod;
+        var change = 0;
+        
+        if(mod > 0)
+            change = value;
+        else
+            change = value * mod / 2;
+        
         this.worldview += change;
         console.log("Updated worldview: " + this.worldview + " ("+change+")");
     },
@@ -182,6 +186,33 @@ Game.prototype =
     {
         this.name = $(this.registration).find("#register-name").val();
         this.profile.find("#profile-name").text(this.name);
+        
+        // Add interests based on gender
+        var gender = $(this.registration).find("input[name=register-gender]:checked").val();
+        switch(gender)
+        {
+            case "male":
+                this.interests.sports = 1;
+                break;
+            case "female":
+                this.interests.celebrities = 1;
+                break;
+            default:
+                this.interests.politics = 1;
+        }
+        
+        // Add interests based on age
+        var dob = new Date($(this.registration).find("#register-age").val());
+        var today = new Date();
+        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+        if(age > 35)
+        {
+            this.interests.finances = 1;
+        }
+        else
+        {
+            this.interests.gaming = 1;
+        }
         
         this.registration.remove();
         $(this.container).append(this.profile);

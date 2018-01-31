@@ -39,7 +39,7 @@ Logic.prototype =
             
             // Handle worldview
             var view = Number(item.attr("worldview"));
-            item.weight += 10 - Math.abs(this.game.worldview - view);
+            item.weight -= Math.abs(this.game.worldview - view);
         }
         
         // Sort by weight
