@@ -126,7 +126,11 @@ select {
     border-radius: 5px;
     border-width: 1px;
     padding: 5px 8px;
-    width: 100%;
+    width: 282px;
+}
+
+#register-form input[type=file] {
+    width:180px;
 }
 
 #register-form input[type=submit] {
@@ -157,13 +161,20 @@ select {
     text-align: center;
 }
 
-#profile-pic {
+#profile-pic, #register-form-defaultpic {
     border: 1px solid #7f3;
     background: url('assets/crabman.jpg');
     background-size: cover;
     width: 150px;
     height: 150px;
     margin: 10px auto;
+}
+
+#register-form-defaultpic {
+    background-image: url('assets/profile.jpg');
+    width: 150px;
+    height:150px;
+    margin: 20px auto!important;
 }
 
 #profile-feed-header, #news-header {

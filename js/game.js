@@ -38,7 +38,7 @@ Game.prototype =
             .append($(document.createElement("div")).attr("id", "register-tagline").text("Jetzt 7 Tage kostenlos ausprobieren!"))
             .append($(document.createElement("div")).attr("id", "register-form").html('\
                 <div id="register-form-name"><br/><input id="register-name" placeholder="Name" type="text"></div>\
-                <div id="register-form-name"><br/><select id="register-gender" name="register-gender"><option value="" disabled selected>Geschlecht</option><option value="male">Männlich</option><option value="female">Weiblich</option><option value="other">Anderes</option></div>\
+                <div id="register-form-name"><br/><select id="register-gender" name="register-gender"><option value="" disabled selected>Geschlecht</option><option value="male">Männlich</option><option value="female">Weiblich</option><option value="other">Andere</option></div>\
                 <div id="register-form-age"><input id="register-age" type="date"></div>\
             ')
             .append($(document.createElement("input")).attr("type", "submit").attr("value", "Registrieren*").click(this.register.bind(this)))
@@ -48,9 +48,10 @@ Game.prototype =
             .append($(document.createElement("div")).attr("id", "register-header").text("Profilbild"))
             .append($(document.createElement("div")).attr("id", "register-tagline").text("Bevor es los geht, lade ein Profilbild hoch."))
             .append($(document.createElement("div")).attr("id", "register-form").html('\
+                <div id="register-form-defaultpic"></div>\
                 <div id="register-form-pic"><input id="register-pic" type="file"></div>\
-            '))
-            .append($(document.createElement("input")).attr("id", "start-button").attr("type", "submit").attr("value", "Los geht's!").click(this.start.bind(this)));
+            ')
+            .append($(document.createElement("input")).attr("id", "start-button").attr("type", "submit").attr("value", "Los geht's!").click(this.start.bind(this))));
         
         this.profile.hide();
         this.newsfeed.hide();
