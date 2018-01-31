@@ -8,6 +8,7 @@ var Game = function Game()
     }
     
     this.worldview = 0;
+    this.worldviewChange = [0];
     
     this.content = new createContent(this).content;
     this.logic = new Logic(this);
@@ -15,8 +16,8 @@ var Game = function Game()
     
     this.init();
     
-    //this.graph.drawGraph();
-    //this.register();
+    //this.graph.drawGraph(this.worldviewChange);
+    this.register();
 }
 
 Game.prototype =
@@ -167,6 +168,8 @@ Game.prototype =
             change = value * mod / 2;
         
         this.worldview += change;
+        this.worldviewChange.push(this.worldview);
+        
         console.log("Updated worldview: " + this.worldview + " ("+change+")");
     },
     
@@ -247,11 +250,15 @@ Game.prototype =
     
     showGraph: function showGraph()
     {
-        this.graph = $(document.createElement("div")).attr("id", "graph");
-        this.graph
+        this.graphPage = $(document.createElement("div")).attr("id", "graph");
+        this.graphPage
             .append($(document.createElement("div")).attr("id", "graph-header").text("Graph"));
         
-        $(this.container).append(this.graph);
+        $(this.container).append(this.graphPage);
+        
+        var graph = this.graph.drawGraph(this.worldviewChange);
+        $(this.container).append(graph);
+        
         this.newsfeed.hide();
         this.profile.hide();
     }

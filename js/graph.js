@@ -11,12 +11,12 @@ var Graph = function Graph(game)
     this.Val_min = -50;
     
     // Values for the Data Plot, they can also be obtained from a external file
-    this.worldview =  [0, 1, 3, 4, 5, 10, 15, 20, 25];
+    // this.worldview =  [0, 1, 3, 4, 5, 10, 15, 20, 25];
 }
 
 Graph.prototype = 
 {
-    drawGraph: function drawGraph()
+    drawGraph: function drawGraph(data)
     {
         // Create Canvas
         this.canvas = document.createElement("canvas");
@@ -24,7 +24,8 @@ Graph.prototype =
         this.canvas.width = 500;
         this.context = this.canvas.getContext("2d");
         this.context.fillStyle = "#0099ff";
-        $("body").append(this.canvas);
+        
+        this.sections = data.length;
         
         // Set Axis
         var stepSize = 10;
@@ -64,6 +65,8 @@ Graph.prototype =
         // Plot Data
         this.context.strokeStyle="#FF0066";
         this.plotData(this.worldview);
+        
+        return this.canvas;
     },
 
     plotData: function plotData(dataSet)
