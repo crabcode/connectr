@@ -76,7 +76,8 @@ Game.prototype =
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
                             .append($(document.createElement("div")).attr("id", "connectr-logo"))
                             .append($(document.createElement("div")).attr("id", "connectr-profile").click(this.showProfile.bind(this)))
-                            .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))));
+                            .append($(document.createElement("div")).attr("id", "connectr-feed").click(this.showNewsfeed.bind(this)))
+                            .append($(document.createElement("div")).attr("id", "connectr-notification").text("Wir haben neue Inhalte für dich!").hide().click(this.showNewsfeed.bind(this)))));
         $("body").append(this.container);
     },
     
@@ -111,6 +112,7 @@ Game.prototype =
     
     respond: function respond(e)
     {
+        $("#connectr-notification").stop().hide();
         var item = $(e.currentTarget.parentElement.parentElement.parentElement);
         
         if ($(e.currentTarget).hasClass("news-response-like"))
@@ -119,7 +121,7 @@ Game.prototype =
             item.addClass("response-like");
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
-            this.profile.find("#profile-shares-container").append(item).removeClass("empty");
+            this.profile.find("#profile-shares-container").prepend(item).removeClass("empty");
             
             this.updateInterests(item.attr("tags").split(","), 1);
             this.updateWorldview(Number(item.attr("worldview")), 1);
@@ -131,7 +133,7 @@ Game.prototype =
             item.addClass("response-dislike");
             item.find(".news-response").remove();
             item.append($(document.createElement("div")).addClass("share-response"));
-            this.profile.find("#profile-shares-container").append(item).removeClass("empty");
+            this.profile.find("#profile-shares-container").prepend(item).removeClass("empty");
             
             this.updateInterests(item.attr("tags").split(","), 1);
             this.updateWorldview(Number(item.attr("worldview")), -1);
@@ -184,12 +186,14 @@ Game.prototype =
     
     showNewsfeed: function showNewsfeed()
     {
+        $("#connectr-notification").stop().hide();
         this.profile.hide();
         this.newsfeed.show();
     },
     
     showProfile: function showProfile()
     {
+        $("#connectr-notification").stop().hide();
         this.newsfeed.hide();
         this.profile.show();
     },
@@ -211,6 +215,7 @@ Game.prototype =
 
             $("#connectr-feed").addClass("alert");
             $("title").text("(!) Connectr");
+            $("#connectr-notification").css("opacity", "0").show().delay(500).animate({ opacity: 1}, 500);
             this.day++;
             
             this.worldviewChange.push(this.worldview);
@@ -268,11 +273,7 @@ Game.prototype =
     
     showGraph: function showGraph()
     {
-        this.graphPage = $(document.createElement("div")).attr("id", "graph");
-        this.graphPage
-            .append($(document.createElement("div")).attr("id", "graph-header").text("Graph"));
-        
-        $(this.container).append(this.graphPage);
+        this.byebye.hide();
         
         var graph = this.graph.drawLineGraph(this.worldviewChange);
         $(this.container).append(graph);
@@ -280,7 +281,12 @@ Game.prototype =
         graph = this.graph.drawBarGraph(this.interests);
         $(this.container).append(graph);
         
-        this.byebye.hide();
+        this.graphPage = $(document.createElement("div")).attr("id", "graph")
+            .append($(document.createElement("div")).attr("id", "graph-header").text("Dein Sharing-Verhalten"))
+            .append($(document.createElement("div")).attr("id", "graph-subheader").text("Politische Ausrichtung"))
+            .append(graph);
+        
+        $(this.container).append(this.graphPage);
     },
     
     showTrialOver: function showTrialOver()

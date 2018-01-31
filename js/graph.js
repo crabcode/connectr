@@ -7,8 +7,8 @@ var Graph = function Graph(game)
     
     this.sections = 8;
     
-    this.Val_max = 90;
-    this.Val_min = -90;
+    this.Val_max = 100;
+    this.Val_min = -100;
     
     this.y;
     
@@ -39,7 +39,7 @@ Graph.prototype =
         var stepSize = 10;
         var columnSize = 50;
         var rowSize = 50;
-        var margin = 10;
+        var margin = 3;
         var xAxis = [" ", "Tag 0", "Tag 1", "Tag 2", "Tag 3", "Tag 4", "Tag 5", "Tag 6", "Tag 7"];
 
         // Set scale
@@ -52,15 +52,16 @@ Graph.prototype =
         // print Parameters on X axis, and grid lines on the graph
         for (i=1;i<=this.sections;i++) {
             var x = i * this.xScale;
-            this.context.fillText(xAxis[i], x,columnSize - margin);
+            this.context.fillText(xAxis[i], x,columnSize - margin*3);
             this.context.moveTo(x, columnSize);
             this.context.lineTo(x, this.canvas.height - margin);
         }
         // print row header and draw horizontal grid lines
         var count =  0;
         for (scale=this.Val_max;scale>=this.Val_min;scale = scale - stepSize) {
-            var y = columnSize + (this.yScale * count * stepSize); 
-            this.context.fillText(scale, margin,y + margin);
+            var y = columnSize + (this.yScale * count * stepSize);
+            
+            this.context.fillText(scale == this.Val_max ? "Konservativ" : (scale <= this.Val_min ? "Progressiv" : scale), margin,y + margin);
             this.context.moveTo(rowSize,y)
             this.context.lineTo(this.canvas.width,y)
             count++;
