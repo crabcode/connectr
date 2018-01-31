@@ -31,6 +31,7 @@ Game.prototype =
         this.newsfeed = $(document.createElement("div")).attr("id", "newsfeed");
         this.registration = $(document.createElement("div")).attr("id", "registration");
         this.avatar = $(document.createElement("div")).attr("id", "avatar");
+        this.byebye = $(document.createElement("div")).attr("id", "byebye");
         
         this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container").addClass("empty"));
         
@@ -56,11 +57,20 @@ Game.prototype =
             ')
             .append($(document.createElement("input")).attr("id", "start-button").attr("type", "submit").attr("value", "Los geht's!").click(this.start.bind(this))));
         
+        this.byebye
+            .append($(document.createElement("div")).attr("id", "byebye-header").text("Auf Wiedersehen!"))
+            .append($(document.createElement("div")).attr("id", "byebye-msg").text("Deine Probezeit ist abgelaufen. Vielen Dank für deine Teilnahme!"))
+            .append($(document.createElement("div")).attr("id", "byebye-link")
+                    .append($(document.createElement("a")).attr("href", "#").text("Hier").click(this.showGraph.bind(this)))
+                    .append(" kommst du zur Auswertung deines Sharing-Verhaltens."));
+        
         this.profile.hide();
         this.newsfeed.hide();
         this.avatar.hide();
+        this.byebye.hide();
         
         $(this.container).append(this.registration);
+        $(this.container).append(this.byebye);
         
         $("body").append($(document.createElement("div")).attr("id", "connectr-header")
                         .append($(document.createElement("div")).attr("id", "connectr-header-container")
@@ -187,18 +197,25 @@ Game.prototype =
     
     loadNextDay: function loadNextDay()
     {
-        var newsitems = this.logic.getNewsItems();
-        
-        for (var i = 0; i < newsitems.length; i++)
-            $("#news-container").append(newsitems[i]);
-        
-        $("#news-container").removeClass("empty");
-        
-        this.sndPop.play();
-        
-        $("#connectr-feed").addClass("alert");
-        $("title").text("(!) Connectr");
-        this.day++;
+        if (this.day < 8)
+        {
+            var newsitems = this.logic.getNewsItems();
+
+            console.log(newsitems);
+
+            for (var i = 0; i < newsitems.length; i++)
+                $("#news-container").append(newsitems[i]);
+
+            $("#news-container").removeClass("empty");
+
+            this.sndPop.play();
+
+            $("#connectr-feed").addClass("alert");
+            $("title").text("(!) Connectr");
+            this.day++;
+        }
+        else
+            this.showTrialOver();
     },
     
     register: function register()
@@ -259,7 +276,14 @@ Game.prototype =
         var graph = this.graph.drawGraph(this.worldviewChange);
         $(this.container).append(graph);
         
+        this.byebye.hide();
+    },
+    
+    showTrialOver: function showTrialOver()
+    {
+        this.registration.hide();
         this.newsfeed.hide();
         this.profile.hide();
+        this.byebye.show();
     }
 };
