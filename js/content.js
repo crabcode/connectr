@@ -9,7 +9,7 @@ var createContent = function(game)
         "",
         ["gaming", "nintendo", "newgame"],
         0,
-        null,true),
+        "assets/nintendo.jpg",true),
 
         this.game.createNewsItem(
         "Kickers im Viertelfinale!",
@@ -37,7 +37,7 @@ var createContent = function(game)
         "",
         ["cats"],
         0,
-        null,true)
+        "assets/cat-poop.jpg",true)
     ],
     [//Day2
         this.game.createNewsItem(

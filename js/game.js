@@ -16,7 +16,7 @@ var Game = function Game()
     
     this.init();
     
-    //this.register();
+    this.register();
 }
 
 Game.prototype =
@@ -32,7 +32,7 @@ Game.prototype =
         
         this.profile.append($(document.createElement("div")).attr("id", "profile-pic")).append($(document.createElement("div")).attr("id", "profile-name").text(this.name)).append($(document.createElement("div")).attr("id", "profile-feed-header").text("Shares")).append($(document.createElement("div")).attr("id", "profile-shares-container").addClass("empty"));
         
-        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed")).append($(document.createElement("div")).attr("id", "news-container"));
+        this.newsfeed.append($(document.createElement("div")).attr("id", "news-header").text("Newsfeed")).append($(document.createElement("div")).attr("id", "news-container").addClass("empty"));
         
         this.registration
             .append($(document.createElement("div")).attr("id", "register-header").text("Willkommen auf Connectr!"))
